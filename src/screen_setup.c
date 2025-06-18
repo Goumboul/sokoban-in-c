@@ -95,24 +95,42 @@ static bool input(int key, char **map,
     return false;
 }
 
-void init_screen(char **map, char **map_original, int *height, int *width)
+static void handle_lose_condition(map_info_t *info)
 {
-    int key;
-    player_t player = {0, 0, 0, 0, 0, 0, 0, 0};
+    mvprintw(info->terminal_height / 2,
+                (info->terminal_width - 8) / 2, "You lose");
+    refresh();
+    getch();
+}
+
+static bool process_game_loop(char **map, char **map_original,
+    player_t *player)
+{
     map_info_t info;
 
-    init_ncurses_info(map, height, width, &player);
-    clear();
     while (1) {
         update_map_info(map, &info);
         if (resize_loop(&info))
             break;
-        render_game(map, &player, &info);
+        render_game(map, player, &info);
         if (check_victory(map, map_original, &info))
             break;
-        key = getch();
-        if (input(key, map, map_original, &player))
+        if (check_lose_condition(map)) {
+            handle_lose_condition(&info);
+            break;
+        }
+        if (input(getch(), map, map_original, player))
             break;
     }
+    return true;
+}
+
+void init_screen(char **map, char **map_original, int *height, int *width)
+{
+    player_t player = {0};
+
+    init_ncurses_info(map, height, width, &player);
+    clear();
+    process_game_loop(map, map_original, &player);
     endwin();
 }

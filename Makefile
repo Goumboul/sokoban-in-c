@@ -22,7 +22,8 @@ SRC = src/main.c	\
 	  lib/my_strdup.c	\
 	  src/load_map.c	\
 	  lib/my_strlen.c	\
-	  lib/my_strncpy.c
+	  lib/my_strncpy.c \
+	  src/check_lose.c \
 
 
 OBJ = $(SRC:.c=.o)
@@ -41,3 +42,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY : clean fclean re all

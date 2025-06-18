@@ -64,8 +64,28 @@ void find_player(char **map, player_t *player)
     }
 }
 
+static void flag_h(void)
+{
+    const char *mess = "Usage: ./program <file>\n";
+    const char *mess1 = "Move the X to the O to win the game\n";
+
+    write(1, mess, 25);
+    write(1, mess1, 37);
+}
+
 int main(int argc, char **argv)
 {
+    int show_help;
+
+    show_help = 0;
+    if (argc == 2) {
+        if (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == '\0')
+            show_help = 1;
+    }
+    if (show_help) {
+        flag_h();
+        return 0;
+    }
     if (argc != 2) {
         write(2, "Usage: ./program <file>\n", 24);
         return 84;
