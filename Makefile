@@ -24,7 +24,7 @@ SRC = src/main.c	\
 	  lib/my_strlen.c	\
 	  lib/my_strncpy.c \
 	  src/check_lose.c \
-
+	  src/error_handle.c \
 
 OBJ = $(SRC:.c=.o)
 

@@ -68,4 +68,7 @@ int my_strlen(char const *str);
 char *my_strdup(const char *src);
 int my_strncpy(char *dest, const char *src, int max_len);
 bool check_lose_condition(char **map);
+int my_strcmp(char const *s1, char const *s2);
+bool has_txt_extension(char *filename);
+void display_ext_error(void);
 #endif

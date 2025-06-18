@@ -24,6 +24,8 @@ int open_map(char **argv)
     int height = 0;
     char **copy = copy_map(map);
 
+    if (!has_txt_extension(argv[1]))
+        return 84;
     if (!map)
         return 84;
     if (!copy) {

@@ -73,16 +73,14 @@ static void flag_h(void)
     write(1, mess1, 37);
 }
 
-int main(int argc, char **argv)
+static bool help_flag(char *arg)
 {
-    int show_help;
+    return arg[0] == '-' && arg[1] == 'h' && arg[2] == '\0';
+}
 
-    show_help = 0;
-    if (argc == 2) {
-        if (argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == '\0')
-            show_help = 1;
-    }
-    if (show_help) {
+static int handle_args(int argc, char **argv)
+{
+    if (argc == 2 && help_flag(argv[1])) {
         flag_h();
         return 0;
     }
@@ -90,7 +88,14 @@ int main(int argc, char **argv)
         write(2, "Usage: ./program <file>\n", 24);
         return 84;
     }
-    if (open_map(argv) == 84)
+    if (!has_txt_extension(argv[1])) {
+        display_ext_error();
         return 84;
-    return 0;
+    }
+    return open_map(argv);
+}
+
+int main(int argc, char **argv)
+{
+    return handle_args(argc, argv);
 }
