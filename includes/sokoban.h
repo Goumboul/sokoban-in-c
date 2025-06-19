@@ -71,4 +71,5 @@ bool check_lose_condition(char **map);
 int my_strcmp(char const *s1, char const *s2);
 bool has_txt_extension(char *filename);
 void display_ext_error(void);
+int validate_map(char **map);
 #endif
