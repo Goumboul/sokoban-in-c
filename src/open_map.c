@@ -23,18 +23,12 @@ int open_map(char **argv)
     int width = 0;
     int height = 0;
     char **copy = copy_map(map);
+    int result = init_screen(map, copy, &width, &height);
 
-    if (validate_map(map) == 84) {
+    if (!has_txt_extension(argv[1]) || !map || !copy ||
+    validate_map(map) == 84) {
         free_map(map);
-        file_close(&file);
-        return 84;
-    }
-    if (!has_txt_extension(argv[1]))
-        return 84;
-    if (!map)
-        return 84;
-    if (!copy) {
-        free_map(map);
+        free_map(copy);
         file_close(&file);
         return 84;
     }
@@ -42,5 +36,5 @@ int open_map(char **argv)
     free_map(map);
     free_map(copy);
     file_close(&file);
-    return 0;
+    return result;
 }

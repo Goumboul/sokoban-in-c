@@ -24,3 +24,13 @@ char **load_map(char *filepath, file_t *file)
     }
     return map;
 }
+
+void reset_case(char **map, char **map_original, int y, int x)
+{
+    if (!case_exists(map, y, x) || !case_exists(map_original, y, x))
+        return;
+    if (map_original[y][x] == 'O')
+        map[y][x] = 'O';
+    else
+        map[y][x] = ' ';
+}

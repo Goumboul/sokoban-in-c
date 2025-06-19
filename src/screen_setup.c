@@ -117,7 +117,7 @@ static bool process_game_loop(char **map, char **map_original,
             break;
         if (check_lose_condition(map)) {
             handle_lose_condition(&info);
-            break;
+            return 1;
         }
         if (input(getch(), map, map_original, player))
             break;
@@ -125,12 +125,14 @@ static bool process_game_loop(char **map, char **map_original,
     return true;
 }
 
-void init_screen(char **map, char **map_original, int *height, int *width)
+int init_screen(char **map, char **map_original, int *height, int *width)
 {
     player_t player = {0};
+    int result;
 
     init_ncurses_info(map, height, width, &player);
     clear();
-    process_game_loop(map, map_original, &player);
+    result = process_game_loop(map, map_original, &player);
     endwin();
+    return result;
 }

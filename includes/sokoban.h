@@ -55,7 +55,7 @@ void reset_map(char **map, char **map_original);
 int can_move(char **map, int new_x, int new_y);
 void display_map(char **map);
 void get_map_info(char **map, map_info_t *info);
-void init_screen(char **map, char **map_original, int *height, int *width);
+int init_screen(char **map, char **map_original, int *height, int *width);
 void find_player(char **map, player_t *player);
 void init_ncurses_info(char **map, int *height, int *width, player_t *player);
 void file_close(file_t *file);
@@ -72,4 +72,6 @@ int my_strcmp(char const *s1, char const *s2);
 bool has_txt_extension(char *filename);
 void display_ext_error(void);
 int validate_map(char **map);
+bool case_exists(char **map, int y, int x);
+void reset_case(char **map, char **map_original, int y, int x);
 #endif
