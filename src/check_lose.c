@@ -14,23 +14,36 @@ static bool is_wall_or_box(char c)
     return false;
 }
 
+static bool check_block(char **map, coord_t c1, coord_t c2)
+{
+    if (!case_exists(map, c1.y, c1.x))
+        return false;
+    if (!case_exists(map, c2.y, c2.x))
+        return false;
+    if (!is_wall_or_box(map[c1.y][c1.x]))
+        return false;
+    if (!is_wall_or_box(map[c2.y][c2.x]))
+        return false;
+    return true;
+}
+
 static bool is_box_blocked(char **map, int y, int x)
 {
-    bool blocked_top_left = false;
-    bool blocked_top_right = false;
-    bool blocked_bottom_left = false;
-    bool blocked_bottom_right = false;
+    coord_t top = {y - 1, x};
+    coord_t bottom = {y + 1, x};
+    coord_t left = {y, x - 1};
+    coord_t right = {y, x + 1};
 
-    if (is_wall_or_box(map[y - 1][x]) && is_wall_or_box(map[y][x - 1]))
-        blocked_top_left = true;
-    if (is_wall_or_box(map[y - 1][x]) && is_wall_or_box(map[y][x + 1]))
-        blocked_top_right = true;
-    if (is_wall_or_box(map[y + 1][x]) && is_wall_or_box(map[y][x - 1]))
-        blocked_bottom_left = true;
-    if (is_wall_or_box(map[y + 1][x]) && is_wall_or_box(map[y][x + 1]))
-        blocked_bottom_right = true;
-    return (blocked_top_left || blocked_top_right ||
-        blocked_bottom_left || blocked_bottom_right);
+    if (check_block(map, top, left))
+        return true;
+    if (check_block(map, top, right))
+        return true;
+    if (check_block(map, bottom, left))
+        return true;
+    if (check_block(map, bottom, right)) {
+        return true;
+    }
+    return false;
 }
 
 static bool check_row(char **map, int y)

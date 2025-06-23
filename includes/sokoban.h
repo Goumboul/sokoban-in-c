@@ -45,6 +45,11 @@ typedef struct player_s {
     int dd_y;
 } player_t;
 
+typedef struct coord_s {
+    int y;
+    int x;
+} coord_t;
+
 void get_size_map(char **map, int *width, int *height);
 char **my_str_to_word_array(char *buffer);
 void move_player(char **map, char **map_original, player_t *player, int key);

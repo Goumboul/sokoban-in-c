@@ -110,19 +110,20 @@ static bool process_game_loop(char **map, char **map_original,
 
     while (1) {
         update_map_info(map, &info);
-        if (resize_loop(&info))
-            break;
+        if (resize_loop(&info)) {
+            return 2;
+        }
         render_game(map, player, &info);
-        if (check_victory(map, map_original, &info))
-            break;
+        if (check_victory(map, map_original, &info)) {
+            return 0;
+        }
         if (check_lose_condition(map)) {
             handle_lose_condition(&info);
             return 1;
         }
         if (input(getch(), map, map_original, player))
-            break;
+            return 2;
     }
-    return true;
 }
 
 int init_screen(char **map, char **map_original, int *height, int *width)
